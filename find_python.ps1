@@ -1,0 +1,4 @@
+$paths = @('.\\venv\\Scripts\\python.exe', '.\\.venv\\Scripts\\python.exe', '.\\env\\Scripts\\python.exe', "$env:USERPROFILE\\AppData\\Local\\Programs\\Python\\Python39\\python.exe", "$env:USERPROFILE\\AppData\\Local\\Programs\\Python\\Python38\\python.exe", "$env:USERPROFILE\\AppData\\Local\\Programs\\Python\\Python310\\python.exe", "$env:USERPROFILE\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe", 'C:\\Program Files\\Python39\\python.exe', 'C:\\Program Files\\Python38\\python.exe', 'C:\\Program Files\\Python310\\python.exe', 'C:\\Program Files (x86)\\Python39-32\\python.exe')
+foreach($p in $paths){ if(Test-Path $p){ Write-Output $p; exit } }
+$found = Get-ChildItem -Path $env:USERPROFILE -Filter python.exe -Recurse -ErrorAction SilentlyContinue -Force | Select-Object -First 1 -ExpandProperty FullName
+if($found){ Write-Output $found } else { Write-Output 'NOTFOUND' }
