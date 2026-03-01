@@ -99,16 +99,16 @@ def main():
     print("Device:", device)
 
     configs: List[Config] = [
-        Config("cfg1", (8, 16), 50, 0.3, 2, 2),
-        Config("cfg2", (16, 32), 100, 0.5, 2, 2),
-        Config("cfg3", (32, 64), 150, 0.5, 2, 2),
-        Config("cfg4", (16, 32), 50, 0.2, 2, 1),
-        Config("cfg5", (8, 32), 200, 0.6, 3, 2),
-        Config("cfg6", (12, 24), 80, 0.4, 2, 2),
-        Config("cfg7", (20, 40), 120, 0.5, 2, 2),
-        Config("cfg8", (16, 48), 64, 0.25, 2, 2),
-        Config("cfg9", (10, 20), 32, 0.1, 2, 2),
-        Config("cfg10", (24, 48), 256, 0.7, 3, 3),
+        Config("Model-01", (8, 16), 50, 0.3, 2, 2),
+        Config("Model-02", (16, 32), 100, 0.5, 2, 2),
+        Config("Model-03", (32, 64), 150, 0.5, 2, 2),
+        Config("Model-04", (16, 32), 50, 0.2, 2, 1),
+        Config("Model-05", (8, 32), 200, 0.6, 3, 2),
+        Config("Model-06", (12, 24), 80, 0.4, 2, 2),
+        Config("Model-07", (20, 40), 120, 0.5, 2, 2),
+        Config("Model-08", (16, 48), 64, 0.25, 2, 2),
+        Config("Model-09", (10, 20), 32, 0.1, 2, 2),
+        Config("Model-10", (24, 48), 256, 0.7, 3, 3),
     ]
 
     out_dir = "experiments_full"
