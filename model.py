@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class FastCNN(nn.Module):
-    """Parametrizable CNN for MNIST.
+    """Parametrizable CNN for BT.
 
     Parameters configurable at construction time:
     - in_channels (default 1)
@@ -27,7 +27,7 @@ class FastCNN(nn.Module):
         pool_stride: int = 2,
         fc1_size: int = 100,
         dropout_p: float = 0.5,
-        num_classes: int = 10,
+        num_classes: int = 4,
     ):
         super().__init__()
         f1, f2 = conv_filters
@@ -44,9 +44,11 @@ class FastCNN(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv1(x)
         x = self.relu(x)
+        x = self.pool(x)
         x = self.conv2(x)
         x = self.relu(x)
         x = self.pool(x)
+        # forwarding; GAP input shape can be obtained with `gap_input_shape()` helper
         x = self.gap(x)
         x = x.view(x.size(0), -1)
         x = self.fc1(x)
@@ -55,9 +57,24 @@ class FastCNN(nn.Module):
         x = self.fc2(x)
         return x
 
+    def gap_input_shape(self, x: torch.Tensor) -> torch.Size:
+        """Return the tensor shape just before the GAP layer for the given input tensor.
+
+        This runs the same conv/pool sequence as `forward` but stops before GAP.
+        Use a small dummy tensor (batch=1) to inspect feature map size.
+        """
+        with torch.no_grad():
+            x = self.conv1(x)
+            x = self.relu(x)
+            x = self.pool(x)
+            x = self.conv2(x)
+            x = self.relu(x)
+            x = self.pool(x)
+            return x.shape
+
 
 if __name__ == "__main__":
     # quick shape sanity check
-    model = FastCNN()
-    x = torch.randn(4, 1, 28, 28)
+    model = FastCNN(in_channels=3)
+    x = torch.randn(4, 3, 224, 224)
     print(model(x).shape)

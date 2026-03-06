@@ -28,24 +28,69 @@ def accuracy_from_logits(logits: torch.Tensor, targets: torch.Tensor) -> float:
 
 
 def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, subset=None):
-    transform = transforms.Compose([transforms.ToTensor()])
-    ds_full = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
+    # image transforms: resize to 224x224, ensure 3 channels, normalize with ImageNet stats
+    transform = transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Lambda(lambda x: x.repeat(3, 1, 1) if x.shape[0] == 1 else x),
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+        ]
+    )
 
-    if subset is not None and subset < len(ds_full):
-        ds_full, _ = random_split(ds_full, [subset, len(ds_full) - subset])
+    # prefer explicit dataset layout dataset/train and dataset/test (ImageFolder)
+    train_dir = os.path.join("dataset", "train")
+    test_dir = os.path.join("dataset", "test")
 
-    n_val = max(1, int(len(ds_full) * val_split))
-    n_train = len(ds_full) - n_val
-    train_ds, val_ds = random_split(ds_full, [n_train, n_val])
+    if os.path.isdir(train_dir) and os.path.isdir(test_dir):
+        train_ds = datasets.ImageFolder(train_dir, transform=transform)
+        val_ds = datasets.ImageFolder(test_dir, transform=transform)
+
+        if subset is not None and subset < len(train_ds):
+            train_ds, _ = random_split(train_ds, [subset, len(train_ds) - subset])
+    else:
+        # fallback to MNIST if dataset folders are not present
+        ds_full = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
+
+        if subset is not None and subset < len(ds_full):
+            ds_full, _ = random_split(ds_full, [subset, len(ds_full) - subset])
+
+        n_val = max(1, int(len(ds_full) * val_split))
+        n_train = len(ds_full) - n_val
+        train_ds, val_ds = random_split(ds_full, [n_train, n_val])
 
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=0)
 
-    model = FastCNN(conv_filters=cfg.conv_filters, fc1_size=cfg.fc1_size, dropout_p=cfg.dropout_p, pool_kernel=cfg.pool_kernel, pool_stride=cfg.pool_stride).to(device)
+    # determine number of classes from dataset and use 3-channel input
+    def _infer_num_classes(ds):
+        if hasattr(ds, "classes"):
+            return len(ds.classes)
+        if hasattr(ds, "dataset") and hasattr(ds.dataset, "classes"):
+            return len(ds.dataset.classes)
+        return 10
+
+    num_classes = _infer_num_classes(train_ds)
+    model = FastCNN(in_channels=3, conv_filters=cfg.conv_filters, fc1_size=cfg.fc1_size, dropout_p=cfg.dropout_p, pool_kernel=cfg.pool_kernel, pool_stride=cfg.pool_stride, num_classes=num_classes).to(device)
+
+    # print GAP input shape once (channels and spatial size) before training starts
+    try:
+        dummy = torch.randn(1, 3, 224, 224, device=device)
+        gap_shape = model.gap_input_shape(dummy)
+        print(f"{cfg.name} GAP input shape (batch,channels,H,W): {gap_shape}")
+    except Exception as e:
+        print("Could not infer GAP input shape:", e)
     opt = optim.Adam(model.parameters(), lr=1e-3)
+    # LR scheduler: reduce LR by factor 0.5 if val_loss doesn't improve for 4 epochs, min lr = 1e-6
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(opt, mode="min", factor=0.5, patience=4, min_lr=1e-6)
     criterion = nn.CrossEntropyLoss()
 
     history = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
+
+    # early stopping params
+    best_val_loss = float("inf")
+    epochs_no_improve = 0
+    patience = 7
 
     for epoch in range(1, epochs + 1):
         model.train()
@@ -89,7 +134,24 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         history["val_loss"].append(val_loss)
         history["val_acc"].append(val_acc)
 
+        # early stopping check
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            epochs_no_improve = 0
+        else:
+            epochs_no_improve += 1
+
+        # step LR scheduler based on validation loss
+        try:
+            scheduler.step(val_loss)
+        except Exception:
+            pass
+
         print(f"{cfg.name} E{epoch}/{epochs} train_loss={train_loss:.4f} train_acc={train_acc:.4f} val_loss={val_loss:.4f} val_acc={val_acc:.4f}")
+
+        if epochs_no_improve >= patience:
+            print(f"Early stopping: no improvement in validation loss for {patience} epochs. Stopping training.")
+            break
 
     return model, history
 
@@ -111,7 +173,7 @@ def main():
         Config("Model-10", (24, 48), 256, 0.7, 3, 3),
     ]
 
-    out_dir = "experiments_full"
+    out_dir = "results"
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(os.path.join(out_dir, "models"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "histories"), exist_ok=True)
@@ -120,8 +182,8 @@ def main():
 
     # default: full MNIST (60000) split with 10% val. To speed up testing, pass subset env var or edit below.
     subset = None  # set to int like 5000 to debug quickly
-    epochs = 50
-    batch_size = 128
+    epochs = 200
+    batch_size = 64
 
     for cfg in configs:
         t0 = time.time()
