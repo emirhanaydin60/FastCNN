@@ -185,7 +185,7 @@ def main():
     # default: full MNIST (60000) split with 10% val. To speed up testing, pass subset env var or edit below.
     subset = None  # set to int like 5000 to debug quickly
     epochs = 200
-    batch_size = 64
+    batch_size = 32
 
     for cfg in configs:
         t0 = time.time()
