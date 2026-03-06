@@ -147,7 +147,9 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         except Exception:
             pass
 
-        print(f"{cfg.name} E{epoch}/{epochs} train_loss={train_loss:.4f} train_acc={train_acc:.4f} val_loss={val_loss:.4f} val_acc={val_acc:.4f}")
+        # report current learning rate (first param group)
+        lr = opt.param_groups[0]["lr"]
+        print(f"{cfg.name} E{epoch}/{epochs} train_loss={train_loss:.4f} train_acc={train_acc:.4f} " f"val_loss={val_loss:.4f} val_acc={val_acc:.4f} lr={lr:.1e}")
 
         if epochs_no_improve >= patience:
             print(f"Early stopping: no improvement in validation loss for {patience} epochs. Stopping training.")
