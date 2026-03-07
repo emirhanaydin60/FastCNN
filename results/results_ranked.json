@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Model-10",
+    "val_loss": 0.987508656680584,
+    "val_acc": 0.718125,
+    "time_s": 741.0788111686707,
+    "conv_filters": [
+      24,
+      48
+    ],
+    "fc1_size": 256,
+    "dropout_p": 0.7,
+    "pool_kernel": 3,
+    "pool_stride": 3
+  },
+  {
+    "name": "Model-02",
+    "val_loss": 0.9916165512800217,
+    "val_acc": 0.67,
+    "time_s": 763.9141793251038,
+    "conv_filters": [
+      16,
+      32
+    ],
+    "fc1_size": 100,
+    "dropout_p": 0.5,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-03",
+    "val_loss": 1.0334665974974633,
+    "val_acc": 0.67875,
+    "time_s": 527.1020531654358,
+    "conv_filters": [
+      32,
+      64
+    ],
+    "fc1_size": 150,
+    "dropout_p": 0.5,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-08",
+    "val_loss": 1.0353945523500443,
+    "val_acc": 0.68375,
+    "time_s": 827.9445400238037,
+    "conv_filters": [
+      16,
+      48
+    ],
+    "fc1_size": 64,
+    "dropout_p": 0.25,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-07",
+    "val_loss": 1.042567359805107,
+    "val_acc": 0.6825,
+    "time_s": 781.4607882499695,
+    "conv_filters": [
+      20,
+      40
+    ],
+    "fc1_size": 120,
+    "dropout_p": 0.5,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-06",
+    "val_loss": 1.0595242255926132,
+    "val_acc": 0.66625,
+    "time_s": 771.776017665863,
+    "conv_filters": [
+      12,
+      24
+    ],
+    "fc1_size": 80,
+    "dropout_p": 0.4,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-05",
+    "val_loss": 1.0737858837842942,
+    "val_acc": 0.6725,
+    "time_s": 597.5298614501953,
+    "conv_filters": [
+      8,
+      32
+    ],
+    "fc1_size": 200,
+    "dropout_p": 0.6,
+    "pool_kernel": 3,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-09",
+    "val_loss": 1.0804422622919083,
+    "val_acc": 0.629375,
+    "time_s": 567.7067580223083,
+    "conv_filters": [
+      10,
+      20
+    ],
+    "fc1_size": 32,
+    "dropout_p": 0.1,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-01",
+    "val_loss": 1.099044172167778,
+    "val_acc": 0.665625,
+    "time_s": 609.8355166912079,
+    "conv_filters": [
+      8,
+      16
+    ],
+    "fc1_size": 50,
+    "dropout_p": 0.3,
+    "pool_kernel": 2,
+    "pool_stride": 2
+  },
+  {
+    "name": "Model-04",
+    "val_loss": 1.1232390016317368,
+    "val_acc": 0.655,
+    "time_s": 528.7988104820251,
+    "conv_filters": [
+      16,
+      32
+    ],
+    "fc1_size": 50,
+    "dropout_p": 0.2,
+    "pool_kernel": 2,
+    "pool_stride": 1
+  }
+]

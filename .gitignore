@@ -1,6 +1,6 @@
 /dataset
 /__pycache__
 /.vs
-/results
+/results/models
 *.bkp
 *.dtmp
