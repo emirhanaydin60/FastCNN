@@ -2,7 +2,7 @@ import os
 import time
 import json
 from dataclasses import asdict, dataclass
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 import torch
 from torch import nn, optim
@@ -10,6 +10,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, random_split
 
 from model import FastCNN
+from plotting import *
 
 
 @dataclass
@@ -27,7 +28,11 @@ def accuracy_from_logits(logits: torch.Tensor, targets: torch.Tensor) -> float:
     return (preds == targets).float().mean().item()
 
 
-def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, subset=None):
+def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, subset=None, dataset_name: Optional[str] = None):
+    # enforce minimum number of epochs before early stopping / LR scheduling
+    min_epochs = 50
+    if epochs < min_epochs:
+        epochs = min_epochs
     # image transforms: resize to 224x224, ensure 3 channels, normalize with ImageNet stats
     transform = transforms.Compose(
         [
@@ -38,9 +43,13 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         ]
     )
 
-    # prefer explicit dataset layout dataset/train and dataset/test (ImageFolder)
-    train_dir = os.path.join("dataset", "train")
-    test_dir = os.path.join("dataset", "test")
+    # prefer explicit dataset layout under dataset/<dataset_name>/train and dataset/<dataset_name>/test (ImageFolder)
+    if dataset_name:
+        train_dir = os.path.join("dataset", dataset_name, "train")
+        test_dir = os.path.join("dataset", dataset_name, "test")
+    else:
+        train_dir = os.path.join("dataset", "train")
+        test_dir = os.path.join("dataset", "test")
 
     if os.path.isdir(train_dir) and os.path.isdir(test_dir):
         train_ds = datasets.ImageFolder(train_dir, transform=transform)
@@ -49,7 +58,7 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         if subset is not None and subset < len(train_ds):
             train_ds, _ = random_split(train_ds, [subset, len(train_ds) - subset])
     else:
-        # fallback to MNIST if dataset folders are not present
+        # fallback to MNIST (torchvision) if dataset folders are not present
         ds_full = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
 
         if subset is not None and subset < len(ds_full):
@@ -97,6 +106,7 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         running_loss = 0.0
         running_acc = 0.0
         seen = 0
+
         for x, y in train_loader:
             x, y = x.to(device), y.to(device)
             opt.zero_grad()
@@ -134,16 +144,17 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         history["val_loss"].append(val_loss)
         history["val_acc"].append(val_acc)
 
-        # early stopping check
+        # early stopping check (update counters)
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_no_improve = 0
         else:
             epochs_no_improve += 1
 
-        # step LR scheduler based on validation loss
+        # step LR scheduler based on validation loss only after min_epochs
         try:
-            scheduler.step(val_loss)
+            if epoch >= min_epochs:
+                scheduler.step(val_loss)
         except Exception:
             pass
 
@@ -151,16 +162,26 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         lr = opt.param_groups[0]["lr"]
         print(f"{cfg.name} E{epoch}/{epochs} train_loss={train_loss:.4f} train_acc={train_acc:.4f} " f"val_loss={val_loss:.4f} val_acc={val_acc:.4f} lr={lr:.1e}")
 
-        if epochs_no_improve >= patience:
+        # early stopping only allowed after min_epochs have completed
+        if epoch >= min_epochs and epochs_no_improve >= patience:
             print(f"Early stopping: no improvement in validation loss for {patience} epochs. Stopping training.")
             break
 
     return model, history
 
 
-def main():
+def main(dataset_name: Optional[str] = None):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
+
+    # if dataset_name parameter passed, use it; otherwise auto-detect
+    if dataset_name is None:
+        if os.path.isdir(os.path.join("dataset", "MNIST")):
+            dataset_name = "MNIST"
+        elif os.path.isdir(os.path.join("dataset", "train")):
+            dataset_name = "BT"
+        else:
+            dataset_name = "MNIST"
 
     configs: List[Config] = [
         Config("Model-01", (8, 16), 50, 0.3, 2, 2),
@@ -175,10 +196,11 @@ def main():
         Config("Model-10", (24, 48), 256, 0.7, 3, 3),
     ]
 
-    out_dir = "results"
+    out_dir = os.path.join("results", dataset_name)
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(os.path.join(out_dir, "models"), exist_ok=True)
     os.makedirs(os.path.join(out_dir, "histories"), exist_ok=True)
+    os.makedirs(os.path.join(out_dir, "plots"), exist_ok=True)
 
     results = []
 
@@ -189,12 +211,12 @@ def main():
 
     for cfg in configs:
         t0 = time.time()
-        model, history = train_eval(cfg, device=device, epochs=epochs, batch_size=batch_size, val_split=0.1, subset=subset)
+        model, history = train_eval(cfg, device=device, epochs=epochs, batch_size=batch_size, val_split=0.1, subset=subset, dataset_name=dataset_name)
         dt = time.time() - t0
 
         # save model state and history
-        model_path = os.path.join(out_dir, "models", f"{cfg.name}.pt")
-        torch.save(model.state_dict(), model_path)
+        # model_path = os.path.join(out_dir, "models", f"{cfg.name}.pt")
+        # torch.save(model.state_dict(), model_path)
 
         hist_path = os.path.join(out_dir, "histories", f"{cfg.name}_history.json")
         with open(hist_path, "w") as f:
@@ -213,6 +235,11 @@ def main():
     print("\nRanking (best -> worst by val_loss):")
     for i, r in enumerate(results_sorted, 1):
         print(f"{i}. {r['name']} val_loss={r['val_loss']:.4f} val_acc={r['val_acc']:.4f} time={r['time_s']:.1f}s")
+
+    # call plotting with the correct results folder
+    from plotting import plot_all
+
+    plot_all(hist_dir=os.path.join(out_dir, "histories"), out_dir=os.path.join(out_dir, "plots"))
 
 
 if __name__ == "__main__":
