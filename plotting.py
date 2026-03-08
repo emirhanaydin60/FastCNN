@@ -4,7 +4,7 @@ from glob import glob
 import matplotlib.pyplot as plt
 
 
-def load_histories(hist_dir="results/histories"):
+def load_histories(hist_dir="results/BT/histories"):
     paths = sorted(glob(os.path.join(hist_dir, "*_history.json")))
     histories = {}
     for p in paths:
@@ -23,7 +23,7 @@ def load_histories(hist_dir="results/histories"):
     return histories
 
 
-def plot_history(name, history, out_dir="results/plots"):
+def plot_history(name, history, out_dir="results/BT/plots"):
     os.makedirs(out_dir, exist_ok=True)
     epochs = range(1, len(history["train_loss"]) + 1)
 
@@ -54,7 +54,7 @@ def plot_history(name, history, out_dir="results/plots"):
     print(f"Saved plot: {out_path}")
 
 
-def plot_all(hist_dir="results/histories", out_dir="results/plots", combined=True):
+def plot_all(hist_dir="results/BT/histories", out_dir="results/BT/plots", combined=True):
     histories = load_histories(hist_dir)
     if not histories:
         print("No histories found in", hist_dir)
