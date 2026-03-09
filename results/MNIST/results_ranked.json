@@ -1,0 +1,52 @@
+[
+  {
+    "model": "Model-10",
+    "min_val_loss": 0.050342482160320896,
+    "epoch": 29
+  },
+  {
+    "model": "Model-08",
+    "min_val_loss": 0.05304825041846683,
+    "epoch": 44
+  },
+  {
+    "model": "Model-03",
+    "min_val_loss": 0.05791353406107131,
+    "epoch": 47
+  },
+  {
+    "model": "Model-07",
+    "min_val_loss": 0.06441956288728397,
+    "epoch": 44
+  },
+  {
+    "model": "Model-02",
+    "min_val_loss": 0.0649263866879046,
+    "epoch": 52
+  },
+  {
+    "model": "Model-05",
+    "min_val_loss": 0.07001433898198108,
+    "epoch": 37
+  },
+  {
+    "model": "Model-06",
+    "min_val_loss": 0.07556545836323252,
+    "epoch": 44
+  },
+  {
+    "model": "Model-04",
+    "min_val_loss": 0.08933649505550663,
+    "epoch": 43
+  },
+  {
+    "model": "Model-09",
+    "min_val_loss": 0.09508212650939822,
+    "epoch": 85
+  },
+  {
+    "model": "Model-01",
+    "min_val_loss": 0.14486628351608913,
+    "epoch": 67
+  }
+]

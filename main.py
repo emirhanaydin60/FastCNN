@@ -33,15 +33,28 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
     min_epochs = 50
     if epochs < min_epochs:
         epochs = min_epochs
-    # image transforms: resize to 224x224, ensure 3 channels, normalize with ImageNet stats
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Lambda(lambda x: x.repeat(3, 1, 1) if x.shape[0] == 1 else x),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-        ]
-    )
+    # image transforms depend on dataset: MNIST -> 1x28x28, BT -> 1x224x224
+    ds_name_upper = dataset_name.upper() if dataset_name else ""
+    if ds_name_upper.startswith("MNIST"):
+        in_channels = 1
+        input_size = (28, 28)
+        transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.1307,), (0.3081,)),
+            ]
+        )
+    else:
+        # assume BT or other medical images: single-channel, resized to 224x224
+        in_channels = 1
+        input_size = (224, 224)
+        transform = transforms.Compose(
+            [
+                transforms.Resize(input_size),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
 
     # prefer explicit dataset layout under dataset/<dataset_name>/train and dataset/<dataset_name>/test (ImageFolder)
     if dataset_name:
@@ -80,11 +93,11 @@ def train_eval(cfg: Config, device, epochs=10, batch_size=128, val_split=0.1, su
         return 10
 
     num_classes = _infer_num_classes(train_ds)
-    model = FastCNN(in_channels=3, conv_filters=cfg.conv_filters, fc1_size=cfg.fc1_size, dropout_p=cfg.dropout_p, pool_kernel=cfg.pool_kernel, pool_stride=cfg.pool_stride, num_classes=num_classes).to(device)
+    model = FastCNN(in_channels=in_channels, conv_filters=cfg.conv_filters, fc1_size=cfg.fc1_size, dropout_p=cfg.dropout_p, pool_kernel=cfg.pool_kernel, pool_stride=cfg.pool_stride, num_classes=num_classes).to(device)
 
     # print GAP input shape once (channels and spatial size) before training starts
     try:
-        dummy = torch.randn(1, 3, 224, 224, device=device)
+        dummy = torch.randn(1, in_channels, input_size[0], input_size[1], device=device)
         gap_shape = model.gap_input_shape(dummy)
         print(f"{cfg.name} GAP input shape (batch,channels,H,W): {gap_shape}")
     except Exception as e:
@@ -243,4 +256,4 @@ def main(dataset_name: Optional[str] = None):
 
 
 if __name__ == "__main__":
-    main()
+    main("MNIST")

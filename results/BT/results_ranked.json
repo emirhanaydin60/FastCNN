@@ -1,142 +1,52 @@
 [
   {
-    "name": "Model-10",
-    "val_loss": 0.9142456858605147,
-    "val_acc": 0.784375,
-    "time_s": 1413.3355913162231,
-    "conv_filters": [
-      24,
-      48
-    ],
-    "fc1_size": 256,
-    "dropout_p": 0.7,
-    "pool_kernel": 3,
-    "pool_stride": 3
+    "model": "Model-10",
+    "min_val_loss": 0.8601553133130073,
+    "epoch": 49
   },
   {
-    "name": "Model-03",
-    "val_loss": 0.957805049046874,
-    "val_acc": 0.740625,
-    "time_s": 1380.9523966312408,
-    "conv_filters": [
-      32,
-      64
-    ],
-    "fc1_size": 150,
-    "dropout_p": 0.5,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-07",
+    "min_val_loss": 0.8836104157567024,
+    "epoch": 38
   },
   {
-    "name": "Model-06",
-    "val_loss": 0.9599708285927773,
-    "val_acc": 0.701875,
-    "time_s": 1250.2366569042206,
-    "conv_filters": [
-      12,
-      24
-    ],
-    "fc1_size": 80,
-    "dropout_p": 0.4,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-03",
+    "min_val_loss": 0.8909745274484158,
+    "epoch": 47
   },
   {
-    "name": "Model-07",
-    "val_loss": 0.9808766832947731,
-    "val_acc": 0.7375,
-    "time_s": 1272.4513974189758,
-    "conv_filters": [
-      20,
-      40
-    ],
-    "fc1_size": 120,
-    "dropout_p": 0.5,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-06",
+    "min_val_loss": 0.9275088182091713,
+    "epoch": 43
   },
   {
-    "name": "Model-08",
-    "val_loss": 0.9895557321608066,
-    "val_acc": 0.72125,
-    "time_s": 1317.9668309688568,
-    "conv_filters": [
-      16,
-      48
-    ],
-    "fc1_size": 64,
-    "dropout_p": 0.25,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-08",
+    "min_val_loss": 0.9592243534326553,
+    "epoch": 45
   },
   {
-    "name": "Model-09",
-    "val_loss": 1.015382218658924,
-    "val_acc": 0.699375,
-    "time_s": 1270.179976940155,
-    "conv_filters": [
-      10,
-      20
-    ],
-    "fc1_size": 32,
-    "dropout_p": 0.1,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-05",
+    "min_val_loss": 0.9660330608487129,
+    "epoch": 35
   },
   {
-    "name": "Model-01",
-    "val_loss": 1.0233254224061965,
-    "val_acc": 0.67875,
-    "time_s": 1303.7165772914886,
-    "conv_filters": [
-      8,
-      16
-    ],
-    "fc1_size": 50,
-    "dropout_p": 0.3,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-09",
+    "min_val_loss": 0.976854687333107,
+    "epoch": 44
   },
   {
-    "name": "Model-05",
-    "val_loss": 1.0390904472768308,
-    "val_acc": 0.719375,
-    "time_s": 1227.865135192871,
-    "conv_filters": [
-      8,
-      32
-    ],
-    "fc1_size": 200,
-    "dropout_p": 0.6,
-    "pool_kernel": 3,
-    "pool_stride": 2
+    "model": "Model-01",
+    "min_val_loss": 1.0074691516160965,
+    "epoch": 43
   },
   {
-    "name": "Model-04",
-    "val_loss": 1.0587656962871552,
-    "val_acc": 0.67375,
-    "time_s": 1288.1747887134552,
-    "conv_filters": [
-      16,
-      32
-    ],
-    "fc1_size": 50,
-    "dropout_p": 0.2,
-    "pool_kernel": 2,
-    "pool_stride": 1
+    "model": "Model-02",
+    "min_val_loss": 1.0117494252324104,
+    "epoch": 33
   },
   {
-    "name": "Model-02",
-    "val_loss": 1.0793172462284566,
-    "val_acc": 0.696875,
-    "time_s": 1293.7586212158203,
-    "conv_filters": [
-      16,
-      32
-    ],
-    "fc1_size": 100,
-    "dropout_p": 0.5,
-    "pool_kernel": 2,
-    "pool_stride": 2
+    "model": "Model-04",
+    "min_val_loss": 1.0438356745243071,
+    "epoch": 35
   }
 ]
