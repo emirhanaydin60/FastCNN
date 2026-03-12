@@ -231,7 +231,7 @@ def save_correlation_plots(dataset, summaries, out_all=None, out_top3=None):
         fig, ax = plt.subplots(figsize=(8, 4))
         ax.plot(epochs, corr_all, marker="o", linestyle="-")
         ax.set_xlabel("Epoch")
-        ax.set_ylabel("Pearson on ranks (all models)")
+        ax.set_ylabel("Spearman on ranks (all models)")
         ax.set_title(f"{dataset} - Epoch similarity vs final ranking (all models)")
         ax.grid(True)
         os.makedirs(os.path.dirname(out_all), exist_ok=True)
@@ -242,7 +242,7 @@ def save_correlation_plots(dataset, summaries, out_all=None, out_top3=None):
         fig, ax = plt.subplots(figsize=(8, 4))
         ax.plot(epochs, corr_top3, marker="o", color="tab:orange", linestyle="-")
         ax.set_xlabel("Epoch")
-        ax.set_ylabel("Pearson on ranks (top-3)")
+        ax.set_ylabel("Spearman on ranks (top-3)")
         ax.set_title(f"{dataset} - Epoch similarity vs final ranking (top-3)")
         ax.grid(True)
         os.makedirs(os.path.dirname(out_top3), exist_ok=True)
@@ -264,60 +264,65 @@ def save_rank_names_table(dataset, summaries, final_ranking, out_csv=None, out_i
         os.makedirs(os.path.dirname(out_csv), exist_ok=True)
         with open(out_csv, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            header = ["epoch"] + [f"rank_{i+1}" for i in range(num_models)] + ["epoch_min_val_loss", "correlation_all", "correlation_top3"]
+            header = ["Epoch"] + [f"rank_{i+1}" for i in range(num_models)] + ["Min. Loss", "Corr. All", "Corr. Top 3"]
             w.writerow(header)
             if include_final_top:
                 row = ["final"] + final_ranking + ["", "", ""]
                 w.writerow(row)
             for s in summaries:
-                row = [f"epoch_{s['epoch']}"] + s["epoch_order"] + [s["epoch_min_val_loss"], s["correlation_all"], s["correlation_top3"]]
+                row = [s["epoch"]] + s["epoch_order"] + [s["epoch_min_val_loss"], s["correlation_all"], s["correlation_top3"]]
                 w.writerow(row)
 
     # Image table
     if out_img:
         if plt is None:
             raise RuntimeError("matplotlib is required to produce image output")
-
-        rows = []
-        row_labels = []
+        # build rows where first column is the Epoch (or 'final' for the top row)
+        rows_combined = []
         if include_final_top:
-            rows.append(final_ranking)
-            row_labels.append("final")
+            rows_combined.append(["final"] + final_ranking + ["", "", ""])
         for s in summaries:
-            rows.append(s["epoch_order"])  # list of names
-            row_labels.append(f"epoch {s['epoch']}")
+            epoch_label = s["epoch"]
+            min_val = f"{s['epoch_min_val_loss']:.4f}" if s["epoch_min_val_loss"] is not None else ""
+            corr_all = f"{s['correlation_all']:.4f}" if s["correlation_all"] is not None else ""
+            corr_top3 = f"{s['correlation_top3']:.4f}" if s["correlation_top3"] is not None else ""
+            rows_combined.append([epoch_label] + s["epoch_order"] + [min_val, corr_all, corr_top3])
 
-        # add extra columns for min and correlations as separate columns at end
-        # convert to strings
-        extra_cols = [["" for _ in rows] for _ in range(3)]
-        for i, s in enumerate(summaries):
-            idx = i + (1 if include_final_top else 0)
-            extra_cols[0][idx] = f"{s['epoch_min_val_loss']:.4f}" if s["epoch_min_val_loss"] is not None else ""
-            extra_cols[1][idx] = f"{s['correlation_all']:.4f}" if s["correlation_all"] is not None else ""
-            extra_cols[2][idx] = f"{s['correlation_top3']:.4f}" if s["correlation_top3"] is not None else ""
+        col_labels = ["Epoch"] + [f"Rank {i+1}" for i in range(num_models)] + ["Min. Loss", "Corr. All", "Corr. Top 3"]
 
-        # build table cell text
-        cell_text = []
-        for r_idx, row in enumerate(rows):
-            cells = []
-            for name in row:
-                cells.append(name)
-            # append extras
-            cells.append(extra_cols[0][r_idx])
-            cells.append(extra_cols[1][r_idx])
-            cells.append(extra_cols[2][r_idx])
-            cell_text.append(cells)
+        # draw: main epochs table on the left, final-ranking table on the right
+        fig_h = max(4, 0.35 * len(rows_combined) + 1.5)
+        fig_w_main = max(8, 1.2 * num_models)
+        fig_w_final = 2.8
+        fig_w = fig_w_main + fig_w_final
+        fig = plt.figure(figsize=(fig_w, fig_h))
+        gs = fig.add_gridspec(1, 2, width_ratios=[fig_w_main, fig_w_final], wspace=0.05)
 
-        col_labels = [f"Rank {i+1}" for i in range(num_models)] + ["min_val", "corr_all", "corr_top3"]
+        ax_main = fig.add_subplot(gs[0, 0])
+        ax_final = fig.add_subplot(gs[0, 1])
+        ax_main.axis("off")
+        ax_final.axis("off")
 
-        # draw
-        fig_h = max(4, 0.35 * len(cell_text) + 1.5)
-        fig_w = max(8, 1.2 * num_models)
-        fig, ax = plt.subplots(figsize=(fig_w, fig_h))
-        ax.axis("off")
-        table = ax.table(cellText=cell_text, colLabels=col_labels, rowLabels=row_labels, cellLoc="center", loc="center")
-        table.auto_set_font_size(False)
-        table.set_fontsize(8)
+        table_main = ax_main.table(cellText=rows_combined, colLabels=col_labels, cellLoc="center", loc="center")
+        table_main.auto_set_font_size(False)
+        table_main.set_fontsize(8)
+
+        # final ranking table (two columns: Rank, Model)
+        final_rows = [[str(i + 1), name] for i, name in enumerate(final_ranking)]
+        final_col_labels = ["Rank", "Model"]
+        table_final = ax_final.table(cellText=final_rows, colLabels=final_col_labels, cellLoc="left", loc="center")
+        table_final.auto_set_font_size(False)
+        table_final.set_fontsize(8)
+
+        # highlight header of final table light green
+        highlight_color = "#d9f2d9"
+        for c in range(len(final_col_labels)):
+            try:
+                hdr = table_final[(-1, c)]
+                hdr.set_facecolor(highlight_color)
+            except Exception:
+                pass
+
         plt.tight_layout()
         os.makedirs(os.path.dirname(out_img), exist_ok=True)
         fig.savefig(out_img, dpi=200)
@@ -417,6 +422,7 @@ def main(dataset="BT", input_dir=None, output_json=None, topk=None, save_json_fl
             print(f"Could not create image: {e}")
 
     sim_csv = os.path.join("results", dataset, "epoch_similarity.csv")
+    summaries = []
     try:
         summaries = compute_epoch_similarity(dataset, out_csv=sim_csv)
         print(f"Wrote epoch similarity JSON to results/{dataset}/epoch_similarity.json and CSV to {sim_csv}")
@@ -448,4 +454,4 @@ def main(dataset="BT", input_dir=None, output_json=None, topk=None, save_json_fl
 
 
 if __name__ == "__main__":
-    main("MNIST")
+    main("BT")
