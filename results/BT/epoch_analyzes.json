@@ -3,7 +3,7 @@
     "epoch": 1,
     "epoch_min_val_loss": 1.2836026060581207,
     "correlation_all": 0.296969696969697,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-05",
@@ -63,7 +63,7 @@
     "epoch": 2,
     "epoch_min_val_loss": 1.1956089305877686,
     "correlation_all": 0.296969696969697,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-03",
       "Model-06",
@@ -123,7 +123,7 @@
     "epoch": 3,
     "epoch_min_val_loss": 1.174078887104988,
     "correlation_all": 0.1393939393939394,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -183,7 +183,7 @@
     "epoch": 4,
     "epoch_min_val_loss": 1.1501090097427369,
     "correlation_all": -0.030303030303030304,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-04",
       "Model-03",
@@ -243,7 +243,7 @@
     "epoch": 5,
     "epoch_min_val_loss": 1.119525315761566,
     "correlation_all": 0.5757575757575758,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -303,7 +303,7 @@
     "epoch": 6,
     "epoch_min_val_loss": 1.0616380298137664,
     "correlation_all": 0.7575757575757576,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -363,7 +363,7 @@
     "epoch": 7,
     "epoch_min_val_loss": 1.0185962998867035,
     "correlation_all": 0.7454545454545455,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -423,7 +423,7 @@
     "epoch": 8,
     "epoch_min_val_loss": 0.9918469297885895,
     "correlation_all": 0.8303030303030303,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -483,7 +483,7 @@
     "epoch": 9,
     "epoch_min_val_loss": 1.0086786085367203,
     "correlation_all": 0.8909090909090909,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -543,7 +543,7 @@
     "epoch": 10,
     "epoch_min_val_loss": 1.0345437669754027,
     "correlation_all": 0.5151515151515151,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-06",
       "Model-07",
@@ -603,7 +603,7 @@
     "epoch": 11,
     "epoch_min_val_loss": 0.9927168163657188,
     "correlation_all": 0.7696969696969697,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -663,7 +663,7 @@
     "epoch": 12,
     "epoch_min_val_loss": 1.0007878598570823,
     "correlation_all": 0.6727272727272727,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -723,7 +723,7 @@
     "epoch": 13,
     "epoch_min_val_loss": 0.9880191934108734,
     "correlation_all": 0.8545454545454545,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-08",
       "Model-10",
@@ -783,7 +783,7 @@
     "epoch": 14,
     "epoch_min_val_loss": 0.9466194486618043,
     "correlation_all": 0.8545454545454545,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -843,7 +843,7 @@
     "epoch": 15,
     "epoch_min_val_loss": 0.9979133003950119,
     "correlation_all": 0.3575757575757576,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-08",
       "Model-07",
@@ -903,7 +903,7 @@
     "epoch": 16,
     "epoch_min_val_loss": 0.9841262571513653,
     "correlation_all": 0.9030303030303031,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-08",
@@ -963,7 +963,7 @@
     "epoch": 17,
     "epoch_min_val_loss": 0.9635075771808624,
     "correlation_all": 0.9272727272727272,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -1023,7 +1023,7 @@
     "epoch": 18,
     "epoch_min_val_loss": 0.9828605443239212,
     "correlation_all": 0.7696969696969697,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -1083,7 +1083,7 @@
     "epoch": 19,
     "epoch_min_val_loss": 0.9662783804535866,
     "correlation_all": 0.9757575757575757,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -1143,7 +1143,7 @@
     "epoch": 20,
     "epoch_min_val_loss": 0.9629161220788955,
     "correlation_all": 0.806060606060606,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-07",
       "Model-03",
@@ -1203,7 +1203,7 @@
     "epoch": 21,
     "epoch_min_val_loss": 0.9741081783175468,
     "correlation_all": 0.8181818181818182,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-03",
       "Model-07",
@@ -1263,7 +1263,7 @@
     "epoch": 22,
     "epoch_min_val_loss": 0.9416136991977692,
     "correlation_all": 0.6848484848484848,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-03",
       "Model-10",
@@ -1323,7 +1323,7 @@
     "epoch": 23,
     "epoch_min_val_loss": 0.9581918266415596,
     "correlation_all": 0.7818181818181819,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -1383,7 +1383,7 @@
     "epoch": 24,
     "epoch_min_val_loss": 1.0071960580348969,
     "correlation_all": 0.4909090909090909,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-05",
       "Model-08",
@@ -1443,7 +1443,7 @@
     "epoch": 25,
     "epoch_min_val_loss": 0.9169374485313893,
     "correlation_all": 0.7696969696969697,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -1503,7 +1503,7 @@
     "epoch": 26,
     "epoch_min_val_loss": 0.9691901874542236,
     "correlation_all": 0.8424242424242424,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-07",
       "Model-08",
@@ -1563,7 +1563,7 @@
     "epoch": 27,
     "epoch_min_val_loss": 0.9000673896074295,
     "correlation_all": 0.8424242424242424,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -1623,7 +1623,7 @@
     "epoch": 28,
     "epoch_min_val_loss": 0.9129380959272385,
     "correlation_all": 0.503030303030303,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-07",
       "Model-08",
@@ -1683,7 +1683,7 @@
     "epoch": 29,
     "epoch_min_val_loss": 0.9113058495521545,
     "correlation_all": 0.806060606060606,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -1743,7 +1743,7 @@
     "epoch": 30,
     "epoch_min_val_loss": 0.9120783197879792,
     "correlation_all": 0.5757575757575758,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-10",
       "Model-08",
@@ -1803,7 +1803,7 @@
     "epoch": 31,
     "epoch_min_val_loss": 0.9031233336031437,
     "correlation_all": 0.8303030303030303,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-03",
       "Model-07",
@@ -1863,7 +1863,7 @@
     "epoch": 32,
     "epoch_min_val_loss": 0.932771066725254,
     "correlation_all": 0.6363636363636364,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-07",
       "Model-06",
@@ -1923,7 +1923,7 @@
     "epoch": 33,
     "epoch_min_val_loss": 0.9023761028051376,
     "correlation_all": 0.7090909090909091,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-03",
@@ -1983,7 +1983,7 @@
     "epoch": 34,
     "epoch_min_val_loss": 0.9205336508154869,
     "correlation_all": 0.9151515151515152,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -2043,7 +2043,7 @@
     "epoch": 35,
     "epoch_min_val_loss": 0.8992444062232972,
     "correlation_all": 0.5636363636363636,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-03",
@@ -2103,7 +2103,7 @@
     "epoch": 36,
     "epoch_min_val_loss": 0.9052483968436718,
     "correlation_all": 0.7454545454545455,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-03",
       "Model-07",
@@ -2163,7 +2163,7 @@
     "epoch": 37,
     "epoch_min_val_loss": 0.9313213285803795,
     "correlation_all": 0.8424242424242424,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-03",
       "Model-10",
@@ -2223,7 +2223,7 @@
     "epoch": 38,
     "epoch_min_val_loss": 0.8836104157567024,
     "correlation_all": 0.8424242424242424,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -2283,7 +2283,7 @@
     "epoch": 39,
     "epoch_min_val_loss": 0.8915003615617753,
     "correlation_all": 0.8424242424242424,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -2343,7 +2343,7 @@
     "epoch": 40,
     "epoch_min_val_loss": 0.933168985247612,
     "correlation_all": 0.9393939393939394,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-07",
       "Model-10",
@@ -2403,7 +2403,7 @@
     "epoch": 41,
     "epoch_min_val_loss": 0.8712502413988114,
     "correlation_all": 0.9272727272727272,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -2463,7 +2463,7 @@
     "epoch": 42,
     "epoch_min_val_loss": 0.9298260632902384,
     "correlation_all": 0.7090909090909091,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-06",
@@ -2523,7 +2523,7 @@
     "epoch": 43,
     "epoch_min_val_loss": 0.8729211901128292,
     "correlation_all": 0.5757575757575758,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-06",
@@ -2583,7 +2583,7 @@
     "epoch": 44,
     "epoch_min_val_loss": 0.9146355147659778,
     "correlation_all": 0.8787878787878788,
-    "correlation_top3": -0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-07",
       "Model-03",
@@ -2643,7 +2643,7 @@
     "epoch": 45,
     "epoch_min_val_loss": 0.9156782451272011,
     "correlation_all": 0.8545454545454545,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.3333333333333333,
     "epoch_order": [
       "Model-07",
       "Model-06",
@@ -2703,7 +2703,7 @@
     "epoch": 46,
     "epoch_min_val_loss": 0.9107845924049616,
     "correlation_all": 0.9272727272727272,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -2763,7 +2763,7 @@
     "epoch": 47,
     "epoch_min_val_loss": 0.8909745274484158,
     "correlation_all": 0.5393939393939394,
-    "correlation_top3": -0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-03",
       "Model-07",
@@ -2823,7 +2823,7 @@
     "epoch": 48,
     "epoch_min_val_loss": 0.8940632756054402,
     "correlation_all": 0.806060606060606,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -2883,7 +2883,7 @@
     "epoch": 49,
     "epoch_min_val_loss": 0.8601553133130073,
     "correlation_all": 0.4666666666666667,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-08",
@@ -2943,7 +2943,7 @@
     "epoch": 50,
     "epoch_min_val_loss": 0.9088737132400274,
     "correlation_all": 0.7333333333333333,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -3003,7 +3003,7 @@
     "epoch": 51,
     "epoch_min_val_loss": 0.8807217170670628,
     "correlation_all": 0.806060606060606,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -3063,7 +3063,7 @@
     "epoch": 52,
     "epoch_min_val_loss": 0.9020059975981712,
     "correlation_all": 0.9393939393939394,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 0.6666666666666666,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -3123,7 +3123,7 @@
     "epoch": 53,
     "epoch_min_val_loss": 0.9001458722352982,
     "correlation_all": 0.9878787878787879,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -3183,7 +3183,7 @@
     "epoch": 54,
     "epoch_min_val_loss": 0.934799614045769,
     "correlation_all": 0.9878787878787879,
-    "correlation_top3": 0.4999999999999999,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-03",
@@ -3243,7 +3243,7 @@
     "epoch": 55,
     "epoch_min_val_loss": 0.9966994743421673,
     "correlation_all": 1.0,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-07",
@@ -3303,7 +3303,7 @@
     "epoch": 56,
     "epoch_min_val_loss": 0.9142456858605147,
     "correlation_all": 1.0,
-    "correlation_top3": 0.9999999999999998,
+    "top3_overlap": 1.0,
     "epoch_order": [
       "Model-10",
       "Model-07",
